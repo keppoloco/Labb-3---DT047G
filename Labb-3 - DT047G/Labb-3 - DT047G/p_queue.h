@@ -2,55 +2,51 @@
 #ifndef P_QUEUE_H
 #define P_QUEUE_H
 
+#include <iostream>
 #include <vector>
 #include <algorithm>
-template<typename T>
-class p_queue {
-public:
-	T pop();
-	void push(T elem);
-	size_t size();
-	bool empty();
-	bool less(const T& e1, const T& e2);
 
-private:
-	std::vector<T> T_vec;
-};
-
-template<typename T>
-inline T p_queue<T>::pop()
-{
-	T last_elem = T_vec.back();
-	T_vec.pop_back();
-
-	return last_elem;
-}
-
-template<typename T>
-inline void p_queue<T>::push(T elem)
-{
-	T_vec.emplace_back(elem);
-
-	std::sort(T_vec.begin(), T_vec.end(), less);
-}
-
-template<typename T>
-inline size_t p_queue<T>::size()
-{
-	return T_vec.size();
-}
-
-template<typename T>
-inline bool p_queue<T>::empty()
-{
-	if (size())
-		return true;
-
-	return false;
-}
-template<typename T>
-inline bool p_queue<T>::less(const T& e1, const T& e2)
+bool less(const int& e1, const int& e2)
 {
 	return e1 < e2;
 }
+
+template<typename T, class cmp>
+class p_queue {
+public:
+	T pop()
+	{
+		T last_elem = T_vec.back();
+		T_vec.pop_back();
+
+		return last_elem;
+	}
+	void push(T elem)
+	{
+		T_vec.emplace_back(elem);
+
+		if (size() > 1)
+			std::sort(T_vec.begin(), T_vec.end(), less);
+	}
+	size_t size()
+	{
+		return T_vec.size();
+	}
+	bool empty()
+	{
+		if (size())
+			return true;
+
+		return false;
+	}
+	void print() const
+	{
+		for (size_t i = 0; i < T_vec.size(); i++)
+			std::cout << T_vec[i] << ' ';
+
+		std::cout << '\n';
+	}
+private:
+	std::vector<T> T_vec;
+};
 #endif //! P_QUEUE_H
