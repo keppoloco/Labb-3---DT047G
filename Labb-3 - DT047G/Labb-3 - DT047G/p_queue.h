@@ -11,7 +11,7 @@ bool less(const int& e1, const int& e2)
 	return e1 < e2;
 }
 
-template<typename T, class cmp>
+template<typename T, class cmp = std::less<>>
 class p_queue {
 public:
 	T pop()
@@ -21,12 +21,14 @@ public:
 
 		return last_elem;
 	}
-	void push(T elem)
+	bool sortType(const T& e1, const T& e2) { return e1 < e2; }
+	void push(T elem, cmp comp = cmp())
 	{
 		T_vec.emplace_back(elem);
 
 		if (size() > 1)
 			std::sort(T_vec.begin(), T_vec.end(), less);
+
 	}
 	size_t size()
 	{
