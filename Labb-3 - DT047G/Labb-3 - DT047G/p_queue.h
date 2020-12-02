@@ -6,28 +6,35 @@
 #include <vector>
 #include <algorithm>
 
-bool less(const int& e1, const int& e2)
+/*bool less(const int& e1, const int& e2)
 {
 	return e1 < e2;
-}
+}*/
+template<typename T>
+struct comparator {
+	bool operator()(const T& e1, const T& e2) { return e1 < e2; }
+};
 
-template<typename T, class cmp = std::less<>>
+template<typename T, class cmp = comparator<T>>
 class p_queue {
 public:
 	T pop()
 	{
-		T last_elem = T_vec.back();
-		T_vec.pop_back();
-
-		return last_elem;
+		T front_elem;
+		if (!T_vec.empty())
+		{
+			front_elem = T_vec.front();
+			T_vec.erase(T_vec.begin());
+		}
+		return front_elem;
 	}
-	bool sortType(const T& e1, const T& e2) { return e1 < e2; }
-	void push(T elem, cmp comp = cmp())
+
+	void push(T elem, cmp comp = comparator<T>())
 	{
 		T_vec.emplace_back(elem);
 
 		if (size() > 1)
-			std::sort(T_vec.begin(), T_vec.end(), less);
+			std::sort(T_vec.begin(), T_vec.end(), comp);
 
 	}
 	size_t size()
@@ -36,7 +43,7 @@ public:
 	}
 	bool empty()
 	{
-		if (size())
+		if (T_vec.empty())
 			return true;
 
 		return false;
@@ -50,5 +57,6 @@ public:
 	}
 private:
 	std::vector<T> T_vec;
+
 };
 #endif //! P_QUEUE_H

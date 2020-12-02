@@ -3,31 +3,24 @@
 
 int main()
 {
-	srand(time(NULL));
-	int iArr[] = { 1,38,63,10 };
-	p_queue<int> pq;
-	p_queue<double> pqd;
+	srand((unsigned int)time(NULL));
+	p_queue<std::string> pqs;
 
-	double dArr[] = { 3.54,1007.1,25.83,1.2,2 };
-	for (int i = 0; i < 5; i++) {
-		pqd.push(dArr[i]);
-	}
+	pqs.push("Hej");
+	pqs.push("xyz");
 
-	for (int i = 0; i < 4; i++)
-		pq.push(iArr[i]);
+	pqs.print();
 
-	pq.print();
 	std::cout << '\n';
 
-	pqd.print();
-	/*p_queue<int,bool> pq;
+	std::cout << pqs.pop();
+	pqs.pop();
 
-	for (int i = 0; i < 10; i++)
-	{
-		int random = rand() % 100 + 1;
-		pq.push(random);
-	}
-	pq.print();
-	*/
+	std::cout << pqs.empty() << std::endl;
+
+	std::cout << '\n';
+
+	//pqs.print();
+
 	return 0;
 }
