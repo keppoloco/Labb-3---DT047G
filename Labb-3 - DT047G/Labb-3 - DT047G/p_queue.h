@@ -1,21 +1,17 @@
 #pragma once
 #ifndef P_QUEUE_H
 #define P_QUEUE_H
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
-/*bool less(const int& e1, const int& e2)
+template<typename T>
+bool less(const T& e1, const T& e2)
 {
 	return e1 < e2;
-}*/
-template<typename T>
-struct comparator {
-	bool operator()(const T& e1, const T& e2) { return e1 < e2; }
-};
+}
 
-template<typename T, class cmp = comparator<T>>
+template<typename T, class cmp = std::less<>>
 class p_queue {
 public:
 	T pop()
@@ -29,12 +25,12 @@ public:
 		return front_elem;
 	}
 
-	void push(T elem, cmp comp = comparator<T>())
+	void push(T elem)
 	{
 		T_vec.emplace_back(elem);
 
 		if (size() > 1)
-			std::sort(T_vec.begin(), T_vec.end(), comp);
+			std::sort(T_vec.begin(), T_vec.end(), less<T>);
 
 	}
 	size_t size()
