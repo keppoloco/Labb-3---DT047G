@@ -8,7 +8,7 @@
 template<typename T>
 bool less(const T& e1, const T& e2)
 {
-	return e1 < e2;
+	return e1.price < e2.price;
 }
 
 template<typename T, class cmp = std::less<>>
@@ -16,13 +16,17 @@ class p_queue {
 public:
 	T pop()
 	{
-		T front_elem;
+		T front_elem = T_vec.front();
+
 		if (!T_vec.empty())
-		{
-			front_elem = T_vec.front();
 			T_vec.erase(T_vec.begin());
-		}
+
 		return front_elem;
+	}
+
+	T front()
+	{
+		return T_vec.front();
 	}
 
 	void push(T elem)
@@ -47,7 +51,7 @@ public:
 	void print() const
 	{
 		for (size_t i = 0; i < T_vec.size(); i++)
-			std::cout << T_vec[i] << ' ';
+			std::cout << T_vec[i].name << ' ' << T_vec[i].price << '\n';
 
 		std::cout << '\n';
 	}
