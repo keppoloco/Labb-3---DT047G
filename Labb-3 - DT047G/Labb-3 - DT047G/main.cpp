@@ -79,9 +79,8 @@ int main()
 			std::cout << "Buyer: " << tmp_buy.name << '\n';
 			std::cout << "Seller: " << tmp_sell.name << '\n';
 			std::cout << "Agreed price: " << tmp_buy.price << '\n';
-
+			std::cout << '\n';
 		}
-		std::cout << '\n';
 		sell.pop();
 		buy.pop();
 	}
