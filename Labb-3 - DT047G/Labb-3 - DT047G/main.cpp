@@ -70,7 +70,6 @@ int main()
 		{
 			if (tmp_buy.name == tmp_sell.name)
 			{
-				sell.pop();
 				buy.pop();
 				continue;
 			}
@@ -80,9 +79,12 @@ int main()
 			std::cout << "Seller: " << tmp_sell.name << '\n';
 			std::cout << "Agreed price: " << tmp_buy.price << '\n';
 			std::cout << '\n';
+
+			sell.pop();
+			buy.pop();
 		}
-		sell.pop();
-		buy.pop();
+		else 
+			buy.pop();
 	}
 
 	return 0;
