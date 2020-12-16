@@ -1,6 +1,8 @@
 #include "p_queue.h"
 #include <time.h>
 
+//template<typename T>
+
 struct buyOrder {
 	std::string name;
 	int price;
@@ -11,14 +13,24 @@ struct order {
 	// wished sell price
 	int price;
 };
+struct xd {
+	bool operator()(const order& e1, const order& e2)
+	{
+		return e1.price < e2.price;
+	}
+};
+bool less(const order& e1, const order& e2)
+{
+	return e1.price < e2.price;
+}
 
 
 int main()
 {
 	srand((unsigned int)time(NULL));
 	
-	p_queue<buyOrder> buy;
-	p_queue<order> sell;
+	p_queue<order,decltype(less)> buy(less);
+	p_queue<order,decltype(less)> sell(less);
 
 	order a;
 	a.name = "Erik Pendel";
@@ -27,37 +39,28 @@ int main()
 	order c;
 	c.name = "Joakim Von Anka";
 
-	buyOrder d;
-	d.name = a.name;
-
-	buyOrder e;
-	e.name = b.name;
-
-	buyOrder f;
-	f.name = c.name;
-
 	for (int i = 0; i < 7; i++)
 	{
 		a.price = rand() % 15 + 15;
 		sell.push(a);
-		d.price = rand() % 15 + 15;
-		buy.push(d);
+		a.price = rand() % 15 + 15;
+		buy.push(a);
 	}
 
 	for (int i = 0; i < 7; i++)
 	{
 		b.price = rand() % 15 + 15;
 		sell.push(b);
-		e.price = rand() % 15 + 15;
-		buy.push(e);
+		b.price = rand() % 15 + 15;
+		buy.push(b);
 	}
 
 	for (int i = 0; i < 7; i++)
 	{
 		c.price = rand() % 15 + 15;
 		sell.push(c);
-		f.price = rand() % 15 + 15;
-		buy.push(f);
+		c.price = rand() % 15 + 15;
+		buy.push(c);
 	}
 
 
@@ -86,6 +89,5 @@ int main()
 		else 
 			buy.pop();
 	}
-
 	return 0;
 }

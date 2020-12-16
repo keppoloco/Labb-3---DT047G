@@ -5,15 +5,14 @@
 #include <vector>
 #include <algorithm>
 
-template<typename T>
-bool less(const T& e1, const T& e2)
-{
-	return e1.price < e2.price;
-}
-
 template<typename T, class cmp = std::less<>>
 class p_queue {
 public:
+
+	p_queue() = default;
+
+	p_queue(cmp comp) : comporator(comp) { }
+
 	T pop()
 	{
 		T front_elem = T_vec.front();
@@ -34,7 +33,7 @@ public:
 		T_vec.emplace_back(elem);
 
 		if (size() > 1)
-			std::sort(T_vec.begin(), T_vec.end(), less<T>);
+			std::sort(T_vec.begin(), T_vec.end(), comporator);
 
 	}
 	size_t size()
@@ -57,6 +56,7 @@ public:
 	}
 private:
 	std::vector<T> T_vec;
+	cmp* comporator;
 
 };
 #endif //! P_QUEUE_H
